@@ -45,11 +45,18 @@ class TestController extends Controller
 
         echo '<pre>';print_r($param);echo '</pre>';
 
-        sort($param);
-        echo '<pre>';print_r($param);echo '</pre>';
-        die;
+        // 字典序排序
+        ksort($param);
+        
+        // 2 拼接 key1=value1&key2=value2...
+        $str = "";
+        foreach($param as $k=>$v)
+        {
+            $str .= $k . '=' . $v . '&';
+        }
+        echo 'str：'.$str;die;
 
-
+        // 3 计算签名
 
         $url = 'https://openapi.alipaydev.com/gateway.do?';
     }
