@@ -15,3 +15,5 @@ Route::get('/', function () {
     // echo "api.1905.com";die;
     return view('welcome');
 });
+
+Route::get('/test/pay','TestController@alipay');
