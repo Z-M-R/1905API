@@ -8,6 +8,7 @@ class TestController extends Controller
 {
     public function alipay()
     {
+        $ali_gateway = 'https://openapi.alipaydev.com/gateway.do';  //支付网关
         // 公共请求参数
         $appid = '2016101100657582';
         $method = 'alipay.trade.page.pay';
@@ -16,7 +17,8 @@ class TestController extends Controller
         $sign = '';
         $timestamp = date('Y-m-d H:i:s ');
         $version = '1.0';
-        $notify_url = 'http://1905api.zmrzzj.com/alipay/notify';   //支付宝异步通知地址
+        $return_url = 'http://1905api.zmrzzj.com/test/alipay/return';   //支付宝异步通知地址
+        $notify_url = 'http://1905api.zmrzzj.com/test/alipay/notify';   //支付宝异步通知地址
         $biz_content = '';
 
         // 请求参数
