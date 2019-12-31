@@ -16,7 +16,7 @@ class TestController extends Controller
         $signtype = 'RSA2';
         $sign = '';
         $timestamp = date('Y-m-d H:i:s');
-        $version = '9999999.99';
+        $version = '0.01';
         $return_url = 'http://1905api.zmrzzj.com/test/alipay/return';   //支付宝同步通知地址
         $notify_url = 'http://1905api.zmrzzj.com/test/alipay/notify';   //支付宝异步通知地址
         $biz_content = '';
