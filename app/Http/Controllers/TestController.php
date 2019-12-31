@@ -42,6 +42,7 @@ class TestController extends Controller
             'timestamp' =>  $timestamp,
             'version'   =>  $version,
             'notify_url'=>  $notify_url,
+            'return_url'=>  $return_url,
             'biz_content'=> json_encode($request_param)
         ];
 
