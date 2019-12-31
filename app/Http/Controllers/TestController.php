@@ -15,15 +15,15 @@ class TestController extends Controller
         $charset = 'utf-8';
         $signtype = 'RSA2';
         $sign = '';
-        $timestamp = date('Y-m-d H:i:s ');
+        $timestamp = date('Y-m-d H:i:s');
         $version = '1.0';
-        $return_url = 'http://1905api.zmrzzj.com/test/alipay/return';   //支付宝异步通知地址
+        $return_url = 'http://1905api.zmrzzj.com/test/alipay/return';   //支付宝同步通知地址
         $notify_url = 'http://1905api.zmrzzj.com/test/alipay/notify';   //支付宝异步通知地址
         $biz_content = '';
 
         // 请求参数
         $out_trade_no = time() . rand(1111,9999);
-        $product_code = 'FAST_INSTENT_TRADE_PAY';
+        $product_code = 'FAST_INSTANT_TRADE_PAY';
         $total_amount = 0.01;
         $subject = '测试订单' . $out_trade_no;
 
@@ -50,7 +50,7 @@ class TestController extends Controller
         //echo '<pre>';print_r($param);echo '</pre>';
         // 字典序排序
         ksort($param);
-        //echo '<pre>';print_r($param);echo '</pre>';
+        // echo '<pre>';print_r($param);echo '</pre>';die;
         // 2 拼接 key1=value1&key2=value2...
         $str = "";
         foreach($param as $k=>$v)
@@ -75,6 +75,7 @@ class TestController extends Controller
         }
         $param_str = rtrim($param_str,'&');
         $url = $ali_gateway . $param_str;
+        //  echo '<pre>';print_r($url);echo '</pre>';die;
         //发送GET请求
         //echo $url;die;
         header("Location:".$url);
