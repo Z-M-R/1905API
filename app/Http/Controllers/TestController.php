@@ -45,19 +45,20 @@ class TestController extends Controller
             'return_url'=>  $return_url,
             'biz_content'=> json_encode($request_param)
         ];
+       
+        // echo '<pre>';print_r($param);echo '</pre>';
 
-        // 老师的代码
-        //echo '<pre>';print_r($param);echo '</pre>';
-        // 字典序排序
+        // // 字典序排序
         ksort($param);
-        // echo '<pre>';print_r($param);echo '</pre>';die;
-        // 2 拼接 key1=value1&key2=value2...
+        
+        // // 2 拼接 key1=value1&key2=value2...
         $str = "";
         foreach($param as $k=>$v)
         {
             $str .= $k . '=' . $v . '&';
         }
-        //echo 'str: '.$str;echo '</br>';
+        // echo 'str：'.$str;die;
+
         $str = rtrim($str,'&');
         //echo 'str: '.$str;echo '</br>';echo '<hr>';
         // 3 计算签名   https://docs.open.alipay.com/291/106118
@@ -79,23 +80,5 @@ class TestController extends Controller
         //发送GET请求
         //echo $url;die;
         header("Location:".$url);
-
-        // 我的代码
-        // echo '<pre>';print_r($param);echo '</pre>';
-
-        // // 字典序排序
-        // ksort($param);
-        
-        // // 2 拼接 key1=value1&key2=value2...
-        // $str = "";
-        // foreach($param as $k=>$v)
-        // {
-        //     $str .= $k . '=' . $v . '&';
-        // }
-        // echo 'str：'.$str;die;
-
-        // // 3 计算签名
-
-        // $url = 'https://openapi.alipaydev.com/gateway.do?';
     }
 }
