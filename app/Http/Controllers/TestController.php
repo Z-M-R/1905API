@@ -43,21 +43,55 @@ class TestController extends Controller
             'biz_content'=> json_encode($request_param)
         ];
 
-        echo '<pre>';print_r($param);echo '</pre>';
-
+        // 老师的代码
+        //echo '<pre>';print_r($param);echo '</pre>';
         // 字典序排序
         ksort($param);
-        
+        //echo '<pre>';print_r($param);echo '</pre>';
         // 2 拼接 key1=value1&key2=value2...
         $str = "";
         foreach($param as $k=>$v)
         {
             $str .= $k . '=' . $v . '&';
         }
-        echo 'str：'.$str;die;
+        //echo 'str: '.$str;echo '</br>';
+        $str = rtrim($str,'&');
+        //echo 'str: '.$str;echo '</br>';echo '<hr>';
+        // 3 计算签名   https://docs.open.alipay.com/291/106118
+        $key = storage_path('keys/app_priv');
+        $priKey = file_get_contents($key);
+        $res = openssl_get_privatekey($priKey);
+        //var_dump($res);echo '</br>';
+        openssl_sign($str, $sign, $res, OPENSSL_ALGO_SHA256);
+        $sign = base64_encode($sign);
+        $param['sign'] = $sign;
+        // 4 urlencode
+        $param_str = '?';
+        foreach($param as $k=>$v){
+            $param_str .= $k.'='.urlencode($v) . '&';
+        }
+        $param_str = rtrim($param_str,'&');
+        $url = $ali_gateway . $param_str;
+        //发送GET请求
+        //echo $url;die;
+        header("Location:".$url);
 
-        // 3 计算签名
+        // 我的代码
+        // echo '<pre>';print_r($param);echo '</pre>';
 
-        $url = 'https://openapi.alipaydev.com/gateway.do?';
+        // // 字典序排序
+        // ksort($param);
+        
+        // // 2 拼接 key1=value1&key2=value2...
+        // $str = "";
+        // foreach($param as $k=>$v)
+        // {
+        //     $str .= $k . '=' . $v . '&';
+        // }
+        // echo 'str：'.$str;die;
+
+        // // 3 计算签名
+
+        // $url = 'https://openapi.alipaydev.com/gateway.do?';
     }
 }
