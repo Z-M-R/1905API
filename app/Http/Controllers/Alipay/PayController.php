@@ -23,7 +23,7 @@ class PayController extends Controller
         $sign = base64_decode($data['sign']);
         unset($data['sign_type']);
         unset($data['sign']);
-        //echo '<pre>';print_r($data);echo '</pre>';
+        echo '<pre>';print_r($sign);echo '</pre>';die;
         $d = [];
         foreach($data as $k=>$v){
             $d[$k] = urldecode($v);
