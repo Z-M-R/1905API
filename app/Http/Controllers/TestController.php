@@ -46,12 +46,12 @@ class TestController extends Controller
             'return_url'=>  $return_url,
             'biz_content'=> json_encode($request_param)
         ];
-       
+
         // echo '<pre>';print_r($param);echo '</pre>';
 
         // // 字典序排序
         ksort($param);
-        
+
         // // 2 拼接 key1=value1&key2=value2...
         $str = "";
         foreach($param as $k=>$v)
@@ -137,7 +137,7 @@ class TestController extends Controller
         echo $str2;echo "</br>";
         echo md5($str2);
     }
-    
+
 
     public function goods(Request $request)
     {
@@ -191,6 +191,44 @@ class TestController extends Controller
     {
         echo "xxxxx";echo '<hr>';
         echo '<pre>';print_r($_GET);echo '</pre>';
+    }
+
+    /**
+     * 验证签名
+     */
+    public function sign1()
+    {
+        echo '<pre>';print_r($_GET);echo '</pre>';
+
+        $sign = $_GET['sign'];
+        unset($_GET['sign']);
+
+        //字典序排序
+        ksort($_GET);
+        echo '<pre>';print_r($_GET);echo '</pre>';
+
+        // 拼接 带签名 字符串
+        $str = "";
+        foreach ($_GET as $k=>$v)
+        {
+            $str .= $k . '=' . $v . '&';
+        }
+
+        $str = rtrim($str,'&');
+        echo $str;echo '<hr>';
+
+        //使用公钥验签
+
+        $pub_key = file_get_contents(storage_path('keys/pubkey2'));
+        $status = openssl_verify($str,base64_decode($sign),$pub_key,OPENSSL_ALGO_SHA256);
+        var_dump($status);
+
+        if ($status)
+        {
+            echo "验签成功";
+        }else{
+            echo "验签失败";
+        }
     }
 
 }

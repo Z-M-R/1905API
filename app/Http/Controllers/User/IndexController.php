@@ -66,4 +66,5 @@ class IndexController extends Controller
         echo '<hr>';
         echo "解密数据：". $dec_data;
     }
+
 }
