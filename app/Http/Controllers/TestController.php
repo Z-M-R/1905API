@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class TestController extends Controller
 {
@@ -136,11 +137,7 @@ class TestController extends Controller
         echo $str2;echo "</br>";
         echo md5($str2);
     }
-    public function rsa1()
-    {
-        echo "xxxxx";echo '<hr>';
-        echo '<pre>';print_r($_GET);echo '</pre>';
-    }
+    
 
     public function goods(Request $request)
     {
@@ -152,6 +149,7 @@ class TestController extends Controller
         Redis::zIncrBy($key,1,$goods_id);
         echo "OK";
     }
+
     /**
      * 商品点击排名
      */
@@ -161,6 +159,7 @@ class TestController extends Controller
         $list = Redis::zRevRange($key,0,-1,true);
         echo '<pre>';print_r($list);echo '</pre>';
     }
+
     public function grab()
     {
         $redis_key = 'l:mobile:1234';   // 记录顺序
@@ -186,6 +185,12 @@ class TestController extends Controller
         }
         $list = Redis::lRange($redis_key,0,-1);
         echo '<pre>';print_r($list);echo '</pre>';
+    }
+
+    public function rsa1()
+    {
+        echo "xxxxx";echo '<hr>';
+        echo '<pre>';print_r($_GET);echo '</pre>';
     }
 
 }
