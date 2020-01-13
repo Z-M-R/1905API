@@ -39,6 +39,7 @@ Route::get('/api/test','Api\TestController@test');
 
 Route::post('/api/user/reg','Api\TestController@reg');  // 用户注册
 Route::post('/api/user/login','Api\TestController@login');  // 用户登录
+Route::get('/api/show/data','Api\TestController@showData');     //获取数据接口
 Route::get('/api/user/list','Api\TestController@userList')->middleware('filter');  // 用户登录
 
 //curl测试
@@ -62,3 +63,7 @@ Route::get('/test/get/signonlie','Sign\IndexController@signOnline');
 Route::post('/test/post/signonlie','Sign\IndexController@signOnline1');
 Route::get('/test/get/sign1','Sign\IndexController@sign1');
 Route::post('/test/post/sign2','Sign\IndexController@sign2');
+
+
+//
+Route::get('/sign2','TestController@sign2');
