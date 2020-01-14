@@ -39,8 +39,9 @@ Route::get('/api/test','Api\TestController@test');
 
 Route::post('/api/user/reg','Api\TestController@reg');  // 用户注册
 Route::post('/api/user/login','Api\TestController@login');  // 用户登录
-Route::get('/api/show/data','Api\TestController@showData');     //获取数据接口
+Route::get('/api/show/data','Api\TestController@showData')->middleware('fangshua');     //获取数据接口
 Route::get('/api/user/list','Api\TestController@userList')->middleware('filter');  // 用户登录
+// Route::get('/api/user/fang','Api\TestController@showData')->middleware('fangshua');
 
 //curl测试
 Route::get('/test/curl1','Test\CurlController@curl1');
