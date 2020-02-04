@@ -207,7 +207,8 @@ class TestController extends Controller
     public function reg()
     {
         //请求passport
-        $url = 'http://passport.1905.com/api/user/reg';
+        // $url = 'http://passport.1905.com/api/user/reg';
+        $url = 'http://passport.zmrzzj.com/api/user/reg'; // 线上
         $response = UserModel::curlPost($url,$_POST);
         return $response;
     }
@@ -217,7 +218,8 @@ class TestController extends Controller
     public function login()
     {
         //请求passport
-        $url = 'http://passport.1905.com/api/user/login';
+        // $url = 'http://passport.1905.com/api/user/login';
+        $url = 'http://passport.zmrzzj.com/api/user/login'; //线上
         $response = UserModel::curlPost($url,$_POST);
         return $response;
     }
@@ -227,7 +229,8 @@ class TestController extends Controller
         $uid = $_SERVER['HTTP_UID'];
         $token = $_SERVER['HTTP_TOKEN'];
         // 请求passport鉴权
-        $url = 'http://passport.1905.com/api/auth';         //鉴权接口
+        // $url = 'http://passport.1905.com/api/auth';         //鉴权接口
+        $url = 'http://passport.zmrzzj.com/api/auth';         //鉴权接口 线上
         $response = UserModel::curlPost($url,['uid'=>$uid,'token'=>$token]);
         echo '<pre>';print_r($response);echo '</pre>';die;
         $status = json_decode($response,true);
@@ -247,6 +250,45 @@ class TestController extends Controller
             ];
         }
         return $response;
+    }
+
+    //二月四号
+    public function postman()
+    {
+        echo __METHOD__;
+    }
+
+    public function postman1()
+    {
+        //获取用户标识
+        $token = $_SERVER['HTTP_TOKEN'];
+        // 当前url
+        $request_uri = $_SERVER['REQUEST_URI'];
+//        echo '<pre>';print_r($_SERVER);echo '</pre>';die;
+
+        $url_hash = md5($token . $request_uri);
+
+
+        //echo 'url_hash: ' .  $url_hash;echo '</br>';
+        $key = 'count:url:'.$url_hash;
+        //echo 'Key: '.$key;echo '</br>';
+
+        //检查 次数是否已经超过限制
+        $count = Redis::get($key);
+        echo "当前接口访问次数为：" . $count;echo '<hr>';
+
+        if($count >= 5){
+            $time = 10;     // 时间秒
+            echo "请勿频繁请求接口, $time 秒后重试";
+            Redis::expire($key,$time);
+            die;
+        }
+
+
+        // 访问数 +1
+        $count = Redis::incr($key);
+        echo '已访问次数为 : '. $count;
+
     }
 
 }
