@@ -258,36 +258,44 @@ class TestController extends Controller
         echo __METHOD__;
     }
 
+    //测试接口
     public function postman1()
     {
-        //获取用户标识
-        $token = $_SERVER['HTTP_TOKEN'];
-        // 当前url
-        $request_uri = $_SERVER['REQUEST_URI'];
-//        echo '<pre>';print_r($_SERVER);echo '</pre>';die;
+        $data = [
+            'user_name' => 'zhangzijie',
+            'email'     => 'zhang@qq.com',
+            'amount'    => 10000
+        ];
 
-        $url_hash = md5($token . $request_uri);
-
-
-        //echo 'url_hash: ' .  $url_hash;echo '</br>';
-        $key = 'count:url:'.$url_hash;
-        //echo 'Key: '.$key;echo '</br>';
-
-        //检查 次数是否已经超过限制
-        $count = Redis::get($key);
-        echo "当前接口访问次数为：" . $count;echo '<hr>';
-
-        if($count >= 5){
-            $time = 10;     // 时间秒
-            echo "请勿频繁请求接口, $time 秒后重试";
-            Redis::expire($key,$time);
-            die;
-        }
+        echo json_encode($data);
 
 
-        // 访问数 +1
-        $count = Redis::incr($key);
-        echo '已访问次数为 : '. $count;
+
+//        //获取用户标识
+//        $token = $_SERVER['HTTP_TOKEN'];
+//        // 当前url
+//        $request_uri = $_SERVER['REQUEST_URI'];
+//        //echo '<pre>';print_r($_SERVER);echo '</pre>';die;
+//
+//        $url_hash = md5($token . $request_uri);
+//
+//        $key = 'count:url:'.$url_hash;
+//
+//        //检查 次数是否已经超过限制
+//        $count = Redis::get($key);
+//        echo "当前访问次数为：" . $count;echo '<hr>';
+//
+//        if($count >= 8){
+//            $time = 5;     // 时间秒
+//            echo "请不要频繁请求接口, $time 秒后重试";
+//            Redis::expire($key,$time);
+//            die;
+//        }
+//
+//
+//        // 访问数 +1
+//        $count = Redis::incr($key);
+//        echo '已访问次数为 : '. $count;
 
     }
 
