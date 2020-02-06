@@ -299,4 +299,23 @@ class TestController extends Controller
 
     }
 
+    public function md5()
+    {
+        $data = "zhang";
+        $key = "2001";
+
+        //$signature = md5($data . $key);
+        $signature = 'qweasdzxcvbnmlk';
+
+        echo "待发送的数据：". $data;echo '</br>';
+        echo "签名：". $signature;echo '</br>';
+
+        //发送数据
+        $url = "http://passport.1905.com/test/check?data=".$data . '&signature='.$signature;
+        echo $url;echo '<hr>';
+
+        $response = file_get_contents($url);
+        echo $response;
+    }
+
 }
