@@ -74,3 +74,5 @@ Route::get('/test/postman','Api\TestController@postman');
 Route::get('/test/postman1','Api\TestController@postman1')->middleware('filter','checktoken');
 
 Route::get('/test/md5','Api\TestController@md5');
+
+Route::get('/test/sign2','Api\TestController@sign2');

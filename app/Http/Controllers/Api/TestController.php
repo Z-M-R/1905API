@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Redis;
 
 use App\Model\UserModel;
@@ -304,8 +304,8 @@ class TestController extends Controller
         $data = "zhang";
         $key = "2001";
 
-        //$signature = md5($data . $key);
-        $signature = 'qweasdzxcvbnmlk';
+        $signature = md5($data . $key);
+//        $signature = 'qweasdzxcvbnmlk';
 
         echo "待发送的数据：". $data;echo '</br>';
         echo "签名：". $signature;echo '</br>';
@@ -316,6 +316,39 @@ class TestController extends Controller
 
         $response = file_get_contents($url);
         echo $response;
+    }
+
+    public function sign2()
+    {
+        $key = "2001";
+
+        //待签名的数据
+        $order_info = [
+            "order_id"          => 'LN_' . mt_rand(111111,999999),
+            "order_amount"      => mt_rand(111,999),
+            "uid"               => 200156,
+            "add_time"          => time(),
+        ];
+
+        $data_json = json_encode($order_info);
+
+        //计算签名
+        $sign = md5($data_json.$key);
+
+        // post 表单（form-data）发送数据
+        $client = new Client();
+        $url = 'http://passport.1905.com/test/check2';
+        $response = $client->request("POST",$url,[
+            "form_params"   => [
+                "data"  => $data_json,
+                "sign"  => $sign
+            ]
+        ]);
+
+        //接收服务器端响应的数据
+        $response_data = $response->getBody();
+        echo $response_data;
+
     }
 
 }
