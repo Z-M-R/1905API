@@ -79,4 +79,5 @@ Route::get('/test/sign2','Api\TestController@sign2');
 
 Route::get('/test/md52','Api\TestController@md52');     //密钥签名
 
-Route::get('/encrypt','Api\TestController@encrypt');
+Route::get('/encrypt','Api\TestController@encrypt');    //对称加密
+Route::get('/rsa','Api\TestController@rsa');    //非对称加密
