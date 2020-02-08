@@ -76,3 +76,5 @@ Route::get('/test/postman1','Api\TestController@postman1')->middleware('filter',
 Route::get('/test/md5','Api\TestController@md5');
 
 Route::get('/test/sign2','Api\TestController@sign2');
+
+Route::get('/test/md52','Api\TestController@md52');     //密钥签名
