@@ -78,3 +78,5 @@ Route::get('/test/md5','Api\TestController@md5');
 Route::get('/test/sign2','Api\TestController@sign2');
 
 Route::get('/test/md52','Api\TestController@md52');     //密钥签名
+
+Route::get('/encrypt','Api\TestController@encrypt');
